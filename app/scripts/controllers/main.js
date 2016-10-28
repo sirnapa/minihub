@@ -15,19 +15,19 @@ angular.module('minihubApp')
           $scope.repos = [];
           $scope.error = '';
 
-          $http.get("https://api.github.com/users/" + $scope.username)
+          $http.get('https://api.github.com/users/' + $scope.username)
             .success(function(data) {
                 if(data.login){
                     $scope.user = data;
 
-                    $http.get("https://api.github.com/users/" + data.login + "/repos")
+                    $http.get('https://api.github.com/users/' + data.login + '/repos')
                       .success(function(data) {
                           $scope.repos = data;
                       });
                 }
             })
             .error(function(){
-                $scope.error = "No se han encontrado datos para el usuario ingresado";
+                $scope.error = 'No se han encontrado datos para el usuario ingresado';
             });
 
       };

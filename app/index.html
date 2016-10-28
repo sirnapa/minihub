@@ -20,15 +20,17 @@
     <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"><i class="fa fa-fw fa-github"></i> Minihub</a>
+            <a class="navbar-brand" href="/">
+                <i class="fa fa-fw fa-github"></i> Minihub
+            </a>
           </div>
           <ul class="nav navbar-nav">
-              <li ng-if="isAuthenticated()"><a href="/#/">Inicio</a></li>
               <li><a href="/#/users">Usuarios</a></li>
               <li><a href="/#/">Repositorios</a></li>
           </ul>
-          <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-            <li><a href="/#/logout">Logout</a></li>
+          <ul class="nav navbar-nav pull-right">
+              <li ng-if="!isAuthenticated()"><a href="/#/login">Login</a></li>
+              <li ng-if="isAuthenticated()"><a href="/#/logout">Logout</a></li>
           </ul>
         </div>
     </div>

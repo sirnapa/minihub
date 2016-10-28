@@ -14,12 +14,12 @@ angular.module('minihubApp')
           $scope.users = [];
           $scope.error = '';
 
-          $http.get("https://api.github.com/search/users?q=" + $scope.username)
+          $http.get('https://api.github.com/search/users?q=' + $scope.username)
             .success(function(data) {
-                if(data.total_count>0){
+                if(data.items.length>0){
                     $scope.users = data.items;
                 }else{
-                    $scope.error = "No se han encontrado resultados.";
+                    $scope.error = 'No se han encontrado resultados.';
                 }
             })
             .error(function(data){

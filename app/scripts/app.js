@@ -36,15 +36,16 @@ angular
       return deferred.promise;
     }];
 
-    var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
-      var deferred = $q.defer();
-      if ($auth.isAuthenticated()) {
-        deferred.resolve();
-      } else {
-        $location.path('/login');
-      }
-      return deferred.promise;
-    }];
+    // var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
+    //   var deferred = $q.defer();
+    //
+    //   if ($auth.isAuthenticated()) {
+    //     deferred.resolve();
+    //   } else {
+    //     $location.path('/login');
+    //   }
+    //   return deferred.promise;
+    // }];
 
     /**
      * App routes
@@ -54,17 +55,17 @@ angular
         url: '/',
         controller: 'MainCtrl',
         templateUrl: 'views/main.html',
-        // resolve: {
+        resolve: {
         //   loginRequired: loginRequired
-        // }
+        }
       })
       .state('users', {
         url: '/users',
         controller: 'UsersCtrl',
         templateUrl: 'views/users.html',
-        // resolve: {
+        resolve: {
         //   loginRequired: loginRequired
-        // }
+        }
       })
       .state('login', {
         url: '/login',
@@ -85,6 +86,7 @@ angular
      *  Satellizer config
      */
     $authProvider.github({
-      clientId: '7572c1dd57c2465d817b'
+      clientId: '7572c1dd57c2465d817b',
+      url: 'http://localhost:3000/auth/github',
     });
   });
