@@ -15,21 +15,76 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ngMessages',
+    'toastr',
+    'ui.router',
+    'satellizer'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
+  .config(function ($stateProvider, $urlRouterProvider, $authProvider) {
+
+      /**
+     * Helper auth functions
+     */
+    var skipIfLoggedIn = ['$q', '$auth', function($q, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.reject();
+      } else {
+        deferred.resolve();
+      }
+      return deferred.promise;
+    }];
+
+    var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
+      var deferred = $q.defer();
+      if ($auth.isAuthenticated()) {
+        deferred.resolve();
+      } else {
+        $location.path('/login');
+      }
+      return deferred.promise;
+    }];
+
+    /**
+     * App routes
+     */
+    $stateProvider
+      .state('main', {
+        url: '/',
         controller: 'MainCtrl',
-        controllerAs: 'main'
+        templateUrl: 'views/main.html',
+        // resolve: {
+        //   loginRequired: loginRequired
+        // }
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      .state('users', {
+        url: '/users',
+        controller: 'UsersCtrl',
+        templateUrl: 'views/users.html',
+        // resolve: {
+        //   loginRequired: loginRequired
+        // }
       })
-      .otherwise({
-        redirectTo: '/'
+      .state('login', {
+        url: '/login',
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        resolve: {
+          skipIfLoggedIn: skipIfLoggedIn
+        }
+      })
+      .state('logout', {
+        url: '/logout',
+        template: null,
+        controller: 'LogoutCtrl'
       });
+    $urlRouterProvider.otherwise('/');
+
+    /**
+     *  Satellizer config
+     */
+    $authProvider.github({
+      clientId: '7572c1dd57c2465d817b'
+    });
   });

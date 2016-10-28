@@ -1,0 +1,78 @@
+<br>
+
+<div class="row">
+
+    <div class="col-sm-9 col-sm-offset-3">
+
+        <form class="form-horizontal" method="post" ng-submit="search()" name="searchForm">
+
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="username" ng-model="username" placeholder="Github username" required autofocus>
+          </div>
+
+          <div class="col-sm-2">
+              <button type="submit" class="btn btn-success btn-block" ng-disabled="searchForm.$invalid">
+                  Buscar
+              </button>
+          </div>
+
+        </form>
+
+        <div class="clearfix"></div>
+        <br>
+
+        <div class="alert alert-danger" role="alert" ng-if="error">
+            {{error}}
+        </div>
+
+        <div class="panel panel-result" ng-repeat="user in users">
+            <div class="panel-body">
+                <div class="col-sm-2">
+                    <a href="/#/?user={{user.login}}">
+                        <img class="img-responsive github-avatar" src="{{user.avatar_url}}"/>
+                    </a>
+                </div>
+                <div class="col-sm-8">
+                    <a href="/#/?user={{user.login}}">
+                        <strong>
+                            {{user.login}}
+                        </strong>
+                    </a>
+                    <p class="text-muted">
+                        {{user.score}}
+                    </p>
+                </div>
+                <div class="col-sm-2">
+                    <ul class="fa-ul text-muted">
+                        <li>
+                            <a href="{{user.html_url}}?tab=repositories">
+                                <i class="fa-li fa fa-code-fork"></i>
+                                Repositorios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{user.html_url}}?tab=stars">
+                                <i class="fa-li fa fa-star"></i>
+                                Estrellas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{user.html_url}}/followers">
+                                <i class="fa-li fa fa-user-circle"></i>
+                                Seguidores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{user.html_url}}/following">
+                                <i class="fa-li fa fa-user-circle-o"></i>
+                                Siguiendo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

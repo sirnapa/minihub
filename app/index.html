@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -16,8 +17,24 @@
   </head>
   <body ng-app="minihubApp">
 
+    <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/"><i class="fa fa-fw fa-github"></i> Minihub</a>
+          </div>
+          <ul class="nav navbar-nav">
+              <li ng-if="isAuthenticated()"><a href="/#/">Inicio</a></li>
+              <li><a href="/#/users">Usuarios</a></li>
+              <li><a href="/#/">Repositorios</a></li>
+          </ul>
+          <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
+            <li><a href="/#/logout">Logout</a></li>
+          </ul>
+        </div>
+    </div>
+
     <div class="container">
-    <div ng-view=""></div>
+        <div ui-view></div>
     </div>
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -31,13 +48,20 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/satellizer/dist/satellizer.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/logout.js"></script>
+        <script src="scripts/controllers/navbar.js"></script>
+        <script src="scripts/controllers/users.js"></script>
         <!-- endbuild -->
 </body>
 </html>

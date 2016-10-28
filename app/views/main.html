@@ -8,27 +8,27 @@
       </p>
 
       <h2>
-          Nombre de usuario
+          {{user.name}}
       </h2>
 
       <p class="text-muted">
-          username
+          {{user.login}}
       </p>
 
-      <hr>
+      <hr ng-if="user.login">
 
       <ul class="fa-ul">
-          <li>
+          <li ng-if="user.company">
               <i class="fa-li fa fa-users"></i>
-              <span>Dato</span>
+              <span>{{user.company}}</span>
           </li>
-          <li>
+          <li ng-if="user.location">
               <i class="fa-li fa fa-map-marker"></i>
-              <span>Dato</span>
+              <span>{{user.location}}</span>
           </li>
-          <li>
+          <li ng-if="user.created_at">
               <i class="fa-li fa fa-clock-o"></i>
-              <span>Dato</span>
+              <span>{{user.created_at}}</span>
           </li>
       </ul>
 
@@ -36,14 +36,16 @@
 
     <div class="col-sm-9">
 
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="post" ng-submit="search()" name="searchForm">
 
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="exampleInputName2" placeholder="Github username">
+            <input type="text" class="form-control" name="username" ng-model="username" placeholder="Github username" required autofocus value="{{default}}">
           </div>
 
           <div class="col-sm-2">
-              <button type="submit" class="btn btn-success btn-block">Buscar</button>
+              <button type="submit" class="btn btn-success btn-block" ng-disabled="searchForm.$invalid">
+                  Buscar
+              </button>
           </div>
 
         </form>
@@ -51,31 +53,39 @@
         <div class="clearfix"></div>
         <br>
 
-        <div class="panel panel-result">
+        <div class="alert alert-danger" role="alert" ng-if="error">
+            {{error}}
+        </div>
+
+        <div class="panel panel-result" ng-repeat="repo in repos">
             <div class="panel-body">
-                <div class="col-sm-10">
-                    <a href="Javascript:void(0);">
+                <div class="col-sm-8">
+                    <a href="{{user.html_url}}">
                         <strong>
-                            Título
+                            {{repo.name}}
                         </strong>
                     </a>
                     <p class="text-muted">
-                        Subtítulo
+                        {{repo.description}}
                     </p>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
+                    <i class="fa fa-fw fa-circle text-muted"></i>
+                    {{repo.language}}
+                </div>
+                <div class="col-sm-1">
                     <ul class="fa-ul text-muted">
                         <li>
-                            <i class="fa-li fa fa-users"></i>
-                            <span>Dato</span>
+                            <i class="fa-li fa fa-star"></i>
+                            {{repo.stargazers_count}}
                         </li>
                         <li>
-                            <i class="fa-li fa fa-map-marker"></i>
-                            <span>Dato</span>
+                            <i class="fa-li fa fa-eye"></i>
+                            {{repo.watchers_count}}
                         </li>
                         <li>
-                            <i class="fa-li fa fa-clock-o"></i>
-                            <span>Dato</span>
+                            <i class="fa-li fa fa-code-fork"></i>
+                            {{repo.forks_count}}
                         </li>
                     </ul>
                 </div>
